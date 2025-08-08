@@ -1,0 +1,34 @@
+from .models import Location
+from dataclasses import field
+from django import forms
+from django.contrib.auth.models import User
+from localflavor.in_.forms import INZipCodeField 
+
+from .models import Location, Profile
+from .widgets import CustomPictureImageFieldWidget
+
+class UserForm(forms.ModelForm):
+    username = forms.CharField(disabled=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class ProfileForm(forms.ModelForm):
+    photo = forms.ImageField(widget=CustomPictureImageFieldWidget)
+    bio = forms.TextInput()
+    
+    class Meta:
+        model = Profile
+        fields = ('photo', 'bio', 'phone_number')
+        
+        
+class LocationForm(forms.ModelForm):
+
+    address_1 = forms.CharField(required=True)
+    Pin_code = INZipCodeField(required=True)
+
+    class Meta:
+        model = Location
+        fields = {'address_1', 'address_2', 'city', 'state', 'Pin_code'}
