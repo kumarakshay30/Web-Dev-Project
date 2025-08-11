@@ -1,0 +1,1 @@
+web: gunicorn Project-1.wsgi
